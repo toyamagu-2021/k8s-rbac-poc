@@ -2,28 +2,44 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: a-reader-read
+  name: read
   namespace: project-a
 subjects:
 - kind: ServiceAccount
   name: reader
   namespace: project-a
+- kind: ServiceAccount
+  name: writer
+  namespace: project-a
 roleRef:
-  kind: ClusterRole
+  kind: Role
   name: pod-read
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
-  name: b-reader-read
+  name: write
   namespace: project-a
 subjects:
 - kind: ServiceAccount
-  name: reader
-  namespace: project-b
+  name: writer
+  namespace: project-a
 roleRef:
-  kind: ClusterRole
+  kind: Role
+  name: pod-write
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read
+  namespace: project-b
+subjects:
+- kind: ServiceAccount
+  name: writer
+  namespace: project-a
+roleRef:
+  kind: Role
   name: pod-read
   apiGroup: rbac.authorization.k8s.io
-  

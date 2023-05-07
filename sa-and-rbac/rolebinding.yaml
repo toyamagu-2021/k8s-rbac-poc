@@ -2,7 +2,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: write-pods
+  name: a-writer-read
   namespace: project-a
 subjects:
 - kind: ServiceAccount
@@ -10,13 +10,27 @@ subjects:
   namespace: project-a
 roleRef:
   kind: Role
-  name: pod-writer
+  name: pod-write
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: read-pods
+  name: a-writer-write
+  namespace: project-a
+subjects:
+- kind: ServiceAccount
+  name: writer
+  namespace: project-a
+roleRef:
+  kind: Role
+  name: pod-read
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: a-reader-read
   namespace: project-a
 subjects:
 - kind: ServiceAccount
@@ -24,13 +38,13 @@ subjects:
   namespace: project-a
 roleRef:
   kind: Role
-  name: pod-reader
+  name: pod-read
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: write-pods
+  name: a-writer-read
   namespace: project-b
 subjects:
 - kind: ServiceAccount
@@ -38,5 +52,5 @@ subjects:
   namespace: project-a
 roleRef:
   kind: Role
-  name: pod-reader
+  name: pod-read
   apiGroup: rbac.authorization.k8s.io
