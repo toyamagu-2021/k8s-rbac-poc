@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: reader
+  namespace: project-a
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: reader
+  namespace: project-b
